@@ -1,0 +1,82 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="pure-min.css"/>
+    <style>
+      body { padding: 1em; }
+      .pure-table { width: 100%; table-layout: fixed; }
+      .pure-table th {
+        padding: 0.4em;
+        padding-bottom: 0.2em;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      .pure-table td  {
+        border-color:rgba(100, 100, 100, 0.25);
+        padding: 0.4em;
+        font-size: 0.9em;
+        overflow-wrap: break-word;
+      }
+      .pure-table td:first-child {
+        font-size: 1em;
+        white-space: nowrap;
+      }
+
+      .pure-table.blue { background-color: #a4c3c8; }
+      .pure-table.blue thead { background-color: #01ffff; }
+      .pure-table.blue tbody tr:nth-last-child(-n+2) { background-color: #75a3b0; }
+
+      .pure-table.green { background-color: #d8ead2; }
+      .pure-table.green thead { background-color: #01ff01; }
+      .pure-table.green tbody tr:nth-last-child(-n+2) { background-color: #b8d7ab; }
+    </style>
+  </head>
+  <body>
+    <table class="pure-table pure-table-bordered green">
+      <thead>
+        <tr>
+          <th>NOVEMBRE</th>
+          <th>Mattino</th>
+          <th>Sera</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Lun 19</td>
+          <td>Cristina</td>
+          <td>Anna</td>
+        </tr>
+        <tr>
+          <td>Mar 20</td>
+          <td>Anna</td>
+          <td>Cristina & girls</td>
+        </tr>
+        <tr>
+          <td>Mer 21</td>
+          <td>Eleonora, Cristina</td>
+          <td>Anna</td>
+        </tr>
+        <tr>
+          <td>Gio 22</td>
+          <td>Anna</td>
+          <td>Sonia</td>
+        </tr>
+        <tr>
+          <td>Ven 23</td>
+          <td>Eleonora</td>
+          <td>Cristina & girls</td>
+        </tr>
+        <tr>
+          <td>Sab 24</td>
+          <td>Anna, Monica, Erika, Elisa</td>
+          <td>Daniele, Stefania, Giona</td>
+        </tr>
+        <tr>
+          <td>Dom 25</td>
+          <td>Barbara, Laura, Elena, Cinzia</td>
+          <td>Anna, Rossana</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
