@@ -1,3 +1,5 @@
 #!/bin/sh
 
-docker run --rm -dp 8081:80 -v $PWD:/www fnichol/uhttpd
+docker build -t wtime .
+docker stop wtime
+docker run --rm -dp 8081:80 --name wtime wtime
