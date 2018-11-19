@@ -35,8 +35,8 @@ export default class TimeTable extends HTMLElement {
 }
 
 function colorFromWeekNumber(n) {
-  const CLASSES = ["blue", "green"]
-  return CLASSES[n % CLASSES.length]
+  const CLASSES = ["blue", "green", "purple", "orange", "yellow", "pink"]
+  return CLASSES[n % (CLASSES.length-1)]
 }
 
 customElements.define('time-table', TimeTable)
