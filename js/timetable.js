@@ -9,7 +9,7 @@ export default class TimeTable extends HTMLElement {
     const day = this.startOfWeek.clone()
 
     var tableHtml = `<h2>Settimana ${day.week()}</h2>`
-    tableHtml += `<table class="pure-table pure-table-bordered green">
+    tableHtml += `<table class="pure-table pure-table-bordered ${colorFromWeekNumber(day.week())}">
       <thead><tr>
         <th>${day.format("MMMM").toUpperCase()}</th>
         <th>Mattino</th>
@@ -31,7 +31,11 @@ export default class TimeTable extends HTMLElement {
     this.innerHTML = tableHtml
   }
 
+}
 
+function colorFromWeekNumber(n) {
+  const CLASSES = ["blue", "green"]
+  return CLASSES[n % CLASSES.length]
 }
 
 customElements.define('time-table', TimeTable)
