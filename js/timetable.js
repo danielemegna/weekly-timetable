@@ -9,14 +9,14 @@ export default class TimeTable extends HTMLElement {
   connectedCallback() {
     const day = this.startOfWeek.clone()
 
-    var tableHtml = `<h2>Settimana ${day.week()}</h2>`
-    tableHtml += `<table class="pure-table pure-table-bordered ${colorFromWeekNumber(day.week())}">
-      <thead><tr>
-        <th>${day.format("MMMM").toUpperCase()}</th>
-        <th>Mattino</th>
-        <th>Sera</th>
-      </tr></thead>
-      <tbody>`
+    var tableHtml = `
+      <table class="pure-table pure-table-bordered ${colorFromWeekNumber(day.week())}">
+        <thead><tr>
+          <th>${day.format("MMMM").toUpperCase()}</th>
+          <th>Mattino</th>
+          <th>Sera</th>
+        </tr></thead>
+        <tbody>`
 
     for(var i=0; i<7; i++) {
       tableHtml += `
