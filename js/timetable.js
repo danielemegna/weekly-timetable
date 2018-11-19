@@ -1,8 +1,9 @@
 export default class TimeTable extends HTMLElement {
   
-  constructor(weekDay) {
+  constructor(weekDay, shifts) {
     super()
     this.startOfWeek = weekDay.startOf('week')
+    this.shifts = shifts
   }
 
   connectedCallback() {
@@ -21,8 +22,8 @@ export default class TimeTable extends HTMLElement {
       tableHtml += `
         <tr>
           <td>${day.format("ddd D")}</td>
-          <td>Cristina</td>
-          <td>Anna</td>
+          <td>${this.shifts[i][0]}</td>
+          <td>${this.shifts[i][1]}</td>
         </tr>`
       day.add(1, 'days')
     }
