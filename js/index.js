@@ -8,8 +8,8 @@ window.addEventListener('load', () => {
 function renderTable(date) {
   const shifts = shiftsFromDate(date)
   const timetable = new TimeTable(date, shifts)
-  const body = document.querySelector('body')
-  body.prepend(timetable)
+  const main = document.querySelector('#main')
+  main.prepend(timetable)
 }
 
 function shiftsFromDate(date) {
