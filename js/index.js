@@ -1,5 +1,5 @@
 import TimeTable from './timetable.js'
-import NavButton from './navbutton.js'
+import { NextButton, PrevButton } from './navbuttons.js'
 
 window.addEventListener('load', () => {
   moment.locale('it')
@@ -15,23 +15,17 @@ function renderPage(weekDay) {
 }
 
 function prevWeekButton(date) {
-  return new NavButton("prevWeek", () => {
-    renderPage(date.subtract(1, 'weeks'))
-  })
+  return new PrevButton(date, renderPage)
 }
 
 function nextWeekButton(date) {
-  return new NavButton("nextWeek", () => {
-    renderPage(date.add(1, 'weeks'))
-  })
+  return new NextButton(date, renderPage)
 }
-
 
 function timeTable(date) {
   const shifts = shiftsFromDate(date)
   return new TimeTable(date, shifts)
 }
-
 
 function shiftsFromDate(date) {
   const weekNumber = date.week()
