@@ -2,15 +2,18 @@ import TimeTable from './timetable.js'
 
 window.addEventListener('load', () => {
   moment.locale('it')
-  renderTable(moment())
+  const today = moment()
+
+  const main = document.querySelector('#main')
+  main.innerHTML = ""
+  main.append(timeTable(today))
 })
 
-function renderTable(date) {
+function timeTable(date) {
   const shifts = shiftsFromDate(date)
-  const timetable = new TimeTable(date, shifts)
-  const main = document.querySelector('#main')
-  main.prepend(timetable)
+  return new TimeTable(date, shifts)
 }
+
 
 function shiftsFromDate(date) {
   const weekNumber = date.week()
