@@ -42,7 +42,7 @@ function htmlFor(startOfWeek, shifts) {
 
 
 function colorFromWeekNumber(n) {
-  const CLASSES = ["blue", "green", "purple", "orange", "yellow", "pink"]
+  const CLASSES = ["blue", "green", "purple", "orange", "yellow", "pink", "red"]
   return CLASSES[n % CLASSES.length]
 }
 
