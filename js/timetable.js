@@ -43,7 +43,7 @@ function htmlFor(startOfWeek, shifts) {
 
 function colorFromWeekNumber(n) {
   const CLASSES = ["blue", "green", "purple", "orange", "yellow", "pink"]
-  return CLASSES[n % (CLASSES.length-1)]
+  return CLASSES[n % CLASSES.length]
 }
 
 customElements.define('time-table', TimeTable)
