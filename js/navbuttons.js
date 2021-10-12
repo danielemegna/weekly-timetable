@@ -1,21 +1,18 @@
-class NavButton extends HTMLElement {
+class NextButton extends HTMLElement {
   constructor(weekDay, renderPageFn) {
     super()
     this.addEventListener('click', () => {
-      renderPageFn(weekDay)
+      renderPageFn(weekDay.add(1, 'week'))
     })
   }
 }
 
-class NextButton extends NavButton {
+class PrevButton extends HTMLElement {
   constructor(weekDay, renderPageFn) {
-    super(weekDay.add(1, 'week'), renderPageFn)
-  }
-}
-
-class PrevButton extends NavButton {
-  constructor(weekDay, renderPageFn) {
-    super(weekDay.subtract(1, 'week'), renderPageFn)
+    super()
+    this.addEventListener('click', () => {
+      renderPageFn(weekDay.subtract(1, 'week'))
+    })
   }
 }
 
