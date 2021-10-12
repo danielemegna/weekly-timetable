@@ -37,5 +37,5 @@ function shiftsFromDate(date) {
     ["Eleonora","Cristina & girls"],
     ["Anna, Monica, Erika, Elisa","Daniele, Stefania, Giona"],
     ["Barbara, Laura, Elena, Cinzia","Anna, Rossana"],
-  ]
+  ].sort( () => .5 - Math.random() );
 }
