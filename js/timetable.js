@@ -7,7 +7,7 @@ export default class TimeTable extends HTMLElement {
   }
 
   connectedCallback() {
-    this.innerHTML = htmlFor(this.startOfWeek, this.shifts)
+    this.outerHTML = htmlFor(this.startOfWeek, this.shifts)
   }
 
 }
@@ -46,4 +46,5 @@ function colorFromWeekNumber(n) {
   return CLASSES[n % CLASSES.length]
 }
 
+// name unused since we built it programmatically
 customElements.define('time-table', TimeTable)

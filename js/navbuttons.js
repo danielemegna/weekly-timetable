@@ -17,5 +17,7 @@ class PrevButton extends HTMLElement {
 }
 
 export { NextButton, PrevButton }
+
+// name unused since we built them programmatically
 customElements.define('next-button', NextButton)
 customElements.define('prev-button', PrevButton)
