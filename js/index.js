@@ -6,12 +6,12 @@ window.addEventListener('load', () => {
   renderPage(moment())
 })
 
-function renderPage(weekDay) {
+async function renderPage(weekDay) {
   const main = document.querySelector('#main')
   main.innerHTML = ``
   main.append(prevWeekButton(weekDay.clone()))
   main.append(nextWeekButton(weekDay.clone()))
-  main.append(timeTable(weekDay.clone()))
+  main.append(await timeTable(weekDay.clone()))
 }
 
 function prevWeekButton(date) {
@@ -22,20 +22,15 @@ function nextWeekButton(date) {
   return new NextButton(date, renderPage)
 }
 
-function timeTable(date) {
-  const shifts = shiftsFromDate(date)
+async function timeTable(date) {
+  const shifts = await shiftsFromDate(date)
   return new TimeTable(date, shifts)
 }
 
-function shiftsFromDate(date) {
+async function shiftsFromDate(date) {
   const weekNumber = date.week()
-  return [
-    ["Cristina","Anna"],
-    ["Anna","Cristina & girls"],
-    ["Eleonora, Cristina","Anna"],
-    ["Anna","Sonia"],
-    ["Eleonora","Cristina & girls"],
-    ["Anna, Monica, Erika, Elisa","Daniele, Stefania, Giona"],
-    ["Barbara, Laura, Elena, Cinzia","Anna, Rossana"],
-  ].sort( () => .5 - Math.random() );
+  console.info(`Fetching week ${weekNumber} ....`)
+  const fetchResponse = await fetch('database.json')
+  const databaseContent = await fetchResponse.json()
+  return databaseContent.sort(() => .5 - Math.random())
 }
