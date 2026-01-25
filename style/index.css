@@ -1,3 +1,8 @@
+body {
+  background-image: url('../material/background.jpeg');
+  background-position: center;
+}
+
 #main { padding: 1em; }
 
 next-button, prev-button {
