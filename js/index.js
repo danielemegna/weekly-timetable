@@ -7,24 +7,25 @@ window.addEventListener('load', () => {
 })
 
 async function renderPage(weekDay) {
-  const main = document.querySelector('#main')
-  main.innerHTML = ``
-  main.append(prevWeekButton(weekDay.clone()))
-  main.append(nextWeekButton(weekDay.clone()))
-  main.append(await timeTable(weekDay.clone()))
+  await renderTimeTable(weekDay.clone())
+  renderPrevWeekButton(weekDay.clone())
+  renderNextWeekButton(weekDay.clone())
 }
 
-function prevWeekButton(date) {
-  return new PrevButton(date, renderPage)
-}
-
-function nextWeekButton(date) {
-  return new NextButton(date, renderPage)
-}
-
-async function timeTable(date) {
+async function renderTimeTable(date) {
   const shifts = await shiftsFromDate(date)
-  return new TimeTable(date, shifts)
+  const htmlElement = new TimeTable(date, shifts)
+  document.querySelector('#time-table').replaceWith(htmlElement)
+}
+
+function renderPrevWeekButton(date) {
+  const htmlElement = new PrevButton(date, renderPage)
+  document.querySelector('#prev-button').replaceWith(htmlElement)
+}
+
+function renderNextWeekButton(date) {
+  const htmlElement = new NextButton(date, renderPage)
+  document.querySelector('#next-button').replaceWith(htmlElement)
 }
 
 async function shiftsFromDate(date) {

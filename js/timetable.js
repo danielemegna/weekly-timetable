@@ -16,7 +16,7 @@ function htmlFor(startOfWeek, shifts) {
   const day = startOfWeek.clone()
 
   const openTable = `
-    <table class="pure-table pure-table-bordered ${colorFromWeekNumber(day.week())}">
+    <table id="time-table" class="pure-table pure-table-bordered ${colorFromWeekNumber(day.week())}">
       <thead><tr>
         <th>${day.format("MM.YYYY").toUpperCase()}</th>
         <th>Mattino</th>

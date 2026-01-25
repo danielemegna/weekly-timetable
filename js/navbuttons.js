@@ -1,6 +1,7 @@
 class NextButton extends HTMLElement {
   constructor(weekDay, renderPageFn) {
     super()
+    this.id = "next-button"
     this.addEventListener('click', () => {
       renderPageFn(weekDay.add(1, 'week'))
     })
@@ -10,6 +11,7 @@ class NextButton extends HTMLElement {
 class PrevButton extends HTMLElement {
   constructor(weekDay, renderPageFn) {
     super()
+    this.id = "prev-button"
     this.addEventListener('click', () => {
       renderPageFn(weekDay.subtract(1, 'week'))
     })
