@@ -1,5 +1,5 @@
 body {
-  background-image: url('../material/background.jpeg');
+  background-image: url('../img/background.jpeg');
   background-position: center;
   padding: 1em;
 }
@@ -13,13 +13,12 @@ body {
     justify-self: center;
   }
 
-  prev-button { background: url(/cat-left.png) no-repeat center center; }
-  next-button { background: url(/cat-right.png) no-repeat center center; }
+  prev-button { background: url('../img/cat-left.png') no-repeat center center; }
+  next-button { background: url('../img/cat-right.png') no-repeat center center; }
   prev-button, next-button {
     height: 3em;
     width: 3em;
     display: block;
-    background-repeat: no-repeat;
     background-size: contain;
   }
 }
