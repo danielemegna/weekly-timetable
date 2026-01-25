@@ -3,7 +3,7 @@
 Temporary docker start
 
 ```
-docker run --rm -it -p 8081:80 -v $PWD:/www --name wtime fnichol/uhttpd
+$ docker run --rm -it -p 8081:80 -v $PWD:/www --name wtime fnichol/uhttpd
 ```
 
 Build for production (see Dockerfile)
