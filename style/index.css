@@ -12,21 +12,23 @@ next-button, prev-button {
   font-size: 1.2em;
   margin-top: 4em;
   width: 100%;
-  table-layout: fixed;
   box-shadow: 5px 10px 8px #888888;
   border-color:rgba(100, 100, 100, 0.25);
-}
-.pure-table th {
-  padding: 0.4em;
-  text-align: left;
-}
-.pure-table td  {
-  border-color:rgba(100, 100, 100, 0.25);
-  padding: 0.3em;
-  overflow-wrap: break-word;
-}
-.pure-table td:first-child {
-  white-space: nowrap;
+
+  th, td {
+    vertical-align: middle;
+  }
+
+  th {
+    padding: 0.4em;
+    font-size: 0.9em;
+  }
+
+  td {
+    border-color:rgba(100, 100, 100, 0.25);
+    padding: 0.2em;
+    overflow-wrap: break-word;
+  }
 }
 
 .pure-table.blue { background-color: #a4c3c8; }
