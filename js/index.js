@@ -32,10 +32,12 @@ async function shiftsFromDate(date) {
   const weekNumber = date.week()
   console.info(`Fetching week ${weekNumber} ....`)
   var fetchResponse = await fetch(`database/week_${weekNumber}.json`)
-  if(fetchResponse.status == 404) {
-    console.info(`Week not found, fetching defaults ...`)
-    fetchResponse = await fetch(`database/default.json`)
+  if(fetchResponse.status == 200) {
+    return await fetchResponse.json()
   }
+
+  console.info(`Week not found, fetching defaults ...`)
+  fetchResponse = await fetch(`database/default.json`)
   const databaseContent = await fetchResponse.json()
   return databaseContent.sort(() => .5 - Math.random())
 }
