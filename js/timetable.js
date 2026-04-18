@@ -31,8 +31,8 @@ function htmlFor(startOfWeek, shifts) {
     tableRows += `
       <tr>
         <td>${day.format("ddd D")}</td>
-        <td>${shifts[i][0]}</td>
-        <td>${shifts[i][1]}</td>
+        <td>${shifts[i][0].join(", ")}</td>
+        <td>${shifts[i][1].join(", ")}</td>
       </tr>`
     day.add(1, 'days')
   }
