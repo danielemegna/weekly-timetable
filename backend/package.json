@@ -5,14 +5,16 @@
   "license": "ISC",
   "scripts": {
     "build": "tsc",
-    "dev": "tsx watch start.ts",
+    "dev": "tsx watch --include ./views/* start.ts",
     "start": "tsx start.ts"
   },
   "devDependencies": {
+    "@types/handlebars": "^4.0.40",
     "typescript": "^4.3.4"
   },
   "dependencies": {
     "@types/node": "^15.12.4",
+    "handlebars": "^4.7.9",
     "tsx": "^4.21.0"
   }
 }
