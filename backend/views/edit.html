@@ -4,26 +4,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Edit Names</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css">
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    table { border-collapse: collapse; width: 300px; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: large;
+      padding: 1.2em;
+    }
+    table { border-collapse: collapse; width: 100%; background-color: #fff6da; }
     th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-    th { background-color: #f5f5f5; }
+    th { background-color: #ffe79b; }
   </style>
 </head>
 <body>
   <h1>Modifica turno</h1>
   <table>
     <tr>
-      <th>Action</th>
-      <th>Name</th>
+      <th>Nome</th>
+      <th></th>
     </tr>
     {{#each names}}
     <tr>
-      <td></td>
       <td>{{this}}</td>
+      <td style="width: 15%; text-align: center;">❌</td>
     </tr>
     {{/each}}
   </table>
+  <br/>
+  <p>Aggiungi:</p>
+  <input type="text" style="width: 100%; font-size: large; box-sizing: border-box;" />
+  <br />
+  <br />
+  <button style="float:right">Salva</button>
 </body>
 </html>
