@@ -2,9 +2,15 @@ import path from 'path'
 import fs from 'fs'
 import Fastify from 'fastify'
 import fastifyView from '@fastify/view'
+import fastifyStatic from '@fastify/static'
 import handlebars from 'handlebars'
 
 const app = Fastify()
+
+app.register(fastifyStatic, {
+  root: path.join(__dirname, 'static'),
+  wildcard: false,
+})
 
 app.register(fastifyView, {
   engine: { handlebars },
