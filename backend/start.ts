@@ -5,6 +5,7 @@ import fastifyStatic from '@fastify/static'
 import handlebars from 'handlebars'
 import { getNamesFor } from './usecases/view'
 import { addToShift } from './usecases/add'
+import { deleteFromShift } from './usecases/delete'
 
 const app = Fastify()
 
@@ -34,7 +35,16 @@ app.post('/edit', async (request, reply) => {
   const shift = parseInt(queryParams.shift || '0')
   const { action, name } = request.body as any
 
-  addToShift(weekNumber, dayOfWeek, shift, name)
+  switch(action) {
+    case 'add':
+      addToShift(weekNumber, dayOfWeek, shift, name)
+      break;
+    case 'delete':
+      deleteFromShift(weekNumber, dayOfWeek, shift, name)
+      break;
+    default:
+      throw Error(`Unknown edit action ${action}`)
+  }
 
   reply.redirect(`/edit?${new URLSearchParams(queryParams).toString()}`)
 })

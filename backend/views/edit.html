@@ -32,7 +32,7 @@
 
       th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
       th { background-color: #ffe79b; }
-      td:nth-child(2) { text-align: center; width: 1%; }
+      td:nth-child(2) { text-align: center; width: 1%; padding:0; }
     }
 
     h4 { margin-top: 1.2em; margin-bottom: 0.5em; }
@@ -42,31 +42,45 @@
       box-sizing: border-box;
     }
 
-    button {
+    #addButton {
       margin-top: 0.6em;
       float: right;
+    }
+
+    #deleteButton {
+      all: unset;
+      display: block;
+      cursor: pointer;
+      height: 2em;
+      width: 2em;
     }
   </style>
 </head>
 <body>
   <h1>Modifica turno</h1>
-  <table>
-    <tr>
-      <th>Nome</th>
-      <th></th>
-    </tr>
-    {{#each names}}
-    <tr>
-      <td>{{this}}</td>
-      <td>❌</td>
-    </tr>
-    {{/each}}
-  </table>
+
+  <form method="post">
+    <table>
+      <tr>
+        <th>Nome</th>
+        <th></th>
+      </tr>
+      {{#each names}}
+      <tr>
+        <td>{{this}}</td>
+        <td>
+          <button id="deleteButton" type="submit" name="name" value="{{this}}">❌</button>
+        </td>
+      </tr>
+      {{/each}}
+    </table>
+    <input type="hidden" name="action" value="delete" />
+  </form>
 
   <form method="post">
     <h4>Aggiungi:</h4>
     <input name="name" type="text" />
-    <button name="action" value="add" type="submit">Salva</button>
+    <button id="addButton" type="submit" name="action" value="add">Aggiungi</button>
   </form>
 
 </body>
