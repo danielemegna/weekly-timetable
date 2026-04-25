@@ -23,11 +23,11 @@ app.get('/', async (_request, reply) => {
 
 app.get('/edit', async (request, reply) => {
   const query = request.query as Record<string, string>
-  const weekNumber = parseInt(query.weekNumber || '1')
+  const week = parseInt(query.week || '1')
   const dayOfWeek = parseInt(query.dayOfWeek || '0')
   const shift = parseInt(query.shift || '0')
 
-  const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'database', 'default.json'), 'utf-8'))
+  const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'database', `week_${week}.json`), 'utf-8'))
   const names = data[dayOfWeek][shift]
 
   return reply.view('edit.html', { names })
