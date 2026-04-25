@@ -1,37 +1,33 @@
-import http from 'http'
-import fs from 'fs'
 import path from 'path'
+import fs from 'fs'
+import Fastify from 'fastify'
+import fastifyView from '@fastify/view'
 import handlebars from 'handlebars'
 
-const editHtmlTemplate = handlebars.compile(
-  fs.readFileSync(path.join(__dirname, 'views', 'edit.html'), 'utf-8')
-)
+const app = Fastify()
 
-http.createServer((request, response) => {
-  const requestedUrl = new URL(request.url!, `http://${request.headers.host}`)
-  switch(requestedUrl.pathname) {
-    case '/': {
-      response.writeHead(200, { 'Content-Type': 'text/plain' })
-      response.end('Hello, world!', 'utf-8')
-      break
-    }
-    case '/edit': {
-      const weekNumber = parseInt(requestedUrl.searchParams.get('weekNumber') || '1')
-      const dayOfWeek = parseInt(requestedUrl.searchParams.get('dayOfWeek') || '0')
-      const shift = parseInt(requestedUrl.searchParams.get('shift') || '0')
+app.register(fastifyView, {
+  engine: { handlebars },
+  root: path.join(__dirname, 'views'),
+})
 
-      const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'database', 'default.json'), 'utf-8'))
-      const names = data[dayOfWeek][shift]
+app.get('/', async (_request, reply) => {
+  reply.send('Hello, world!')
+})
 
-      const html = editHtmlTemplate({ names })
-      response.writeHead(200, { 'Content-Type': 'text/html' })
-      response.end(html, 'utf-8')
-      break;
-    }
-    default: {
-      response.writeHead(500)
-      response.end('Bad request!')
-      break;
-    }
-  }
-}).listen(8125);
+app.get('/edit', async (request, reply) => {
+  const query = request.query as Record<string, string>
+  const weekNumber = parseInt(query.weekNumber || '1')
+  const dayOfWeek = parseInt(query.dayOfWeek || '0')
+  const shift = parseInt(query.shift || '0')
+
+  const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'database', 'default.json'), 'utf-8'))
+  const names = data[dayOfWeek][shift]
+
+  return reply.view('edit.html', { names })
+})
+
+app.listen({ port: 8125 }, (err, address) => {
+  if (err) throw err
+  console.log(`Server listening at ${address}`)
+})
