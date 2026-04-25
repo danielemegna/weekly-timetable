@@ -31,3 +31,7 @@ yarn-error.log*
 
 # allow repo-local .npmrc
 .npmrc
+
+# ignores database files but default
+!database/default.json
+database/*.json
