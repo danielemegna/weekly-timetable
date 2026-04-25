@@ -36,7 +36,7 @@ app.post('/edit', async (request, reply) => {
 
   addToShift(weekNumber, dayOfWeek, shift, name)
 
-  reply.send('Ok!')
+  reply.redirect(`/edit?${new URLSearchParams(queryParams).toString()}`)
 })
 
 app.listen({ port: 8125 }, (err, address) => {
