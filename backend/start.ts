@@ -7,15 +7,9 @@ import handlebars from 'handlebars'
 
 const app = Fastify()
 
-app.register(fastifyStatic, {
-  root: path.join(__dirname, 'static'),
-  wildcard: false,
-})
-
-app.register(fastifyView, {
-  engine: { handlebars },
-  root: path.join(__dirname, 'views'),
-})
+app.register(fastifyStatic, { root: path.join(__dirname, 'static'), wildcard: false })
+app.register(fastifyView, { engine: { handlebars }, root: path.join(__dirname, 'views') })
+app.register(require('@fastify/formbody'));
 
 app.get('/', async (_request, reply) => {
   reply.send('Hello, world!')
@@ -31,6 +25,18 @@ app.get('/edit', async (request, reply) => {
   const names = data[dayOfWeek][shift]
 
   return reply.view('edit.html', { names })
+})
+
+app.post('/edit', async (request, reply) => {
+  const query = request.query as Record<string, string>
+  const week = parseInt(query.week || '1')
+  const dayOfWeek = parseInt(query.dayOfWeek || '0')
+  const shift = parseInt(query.shift || '0')
+  const { action, name } = request.body as any
+
+  console.debug({week, dayOfWeek, shift, action, name})
+
+  reply.send('Ok!')
 })
 
 app.listen({ port: 8125 }, (err, address) => {

@@ -37,7 +37,7 @@
 
     h4 { margin-top: 1.2em; margin-bottom: 0.5em; }
 
-    input[name="name-to-add"] {
+    input[name="name"] {
       width: 100%;
       box-sizing: border-box;
     }
@@ -63,8 +63,11 @@
     {{/each}}
   </table>
 
-  <h4>Aggiungi:</h4>
-  <input name="name-to-add" type="text" />
-  <button style="float:right">Salva</button>
+  <form method="post">
+    <h4>Aggiungi:</h4>
+    <input name="name" type="text" />
+    <button name="action" value="add" type="submit">Salva</button>
+  </form>
+
 </body>
 </html>
