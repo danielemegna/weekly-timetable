@@ -8,5 +8,9 @@ export function getNamesFor(weekNumber: number, dayOfWeek: number, shift: number
 }
 
 function getDatabaseFor(weekNumber: number): any {
-  return JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'database', `week_${weekNumber}.json`), 'utf-8'))
+  const dbFolder = path.join(__dirname, '..', 'database')
+  const weekFilePath = path.join(dbFolder, `week_${weekNumber}.json`)
+  if (!fs.existsSync(weekFilePath))
+    fs.copyFileSync(path.join(dbFolder, 'default.json'), weekFilePath)
+  return JSON.parse(fs.readFileSync(weekFilePath, 'utf-8'))
 }
