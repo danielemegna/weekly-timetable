@@ -3,17 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Edit Names</title>
+  <title>Modifica Turno</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       font-size: large;
       padding: 1.2em;
     }
-    table { border-collapse: collapse; width: 100%; background-color: #fff6da; }
-    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-    th { background-color: #ffe79b; }
+
+    h1 {
+      text-decoration: underline;
+      font-family: "Chewy", system-ui;
+      font-weight: 400;
+      font-style: normal;
+      font-size: 2.6em;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background-color: #fff6da;
+
+      th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+      th { background-color: #ffe79b; }
+      td:nth-child(2) { text-align: center; width: 1%; }
+    }
+
+    h4 { margin-top: 1.2em; margin-bottom: 0.5em; }
+
+    input[name="name-to-add"] {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 0.6em;
+      float: right;
+    }
   </style>
 </head>
 <body>
@@ -26,15 +56,13 @@
     {{#each names}}
     <tr>
       <td>{{this}}</td>
-      <td style="width: 15%; text-align: center;">❌</td>
+      <td>❌</td>
     </tr>
     {{/each}}
   </table>
-  <br/>
-  <p>Aggiungi:</p>
-  <input type="text" style="width: 100%; font-size: large; box-sizing: border-box;" />
-  <br />
-  <br />
+
+  <h4>Aggiungi:</h4>
+  <input name="name-to-add" type="text" />
   <button style="float:right">Salva</button>
 </body>
 </html>
