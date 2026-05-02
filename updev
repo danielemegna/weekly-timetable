@@ -1,3 +1,0 @@
-#!/bin/sh
-
-docker run --rm -ip 8081:80 -v $PWD:/www fnichol/uhttpd
