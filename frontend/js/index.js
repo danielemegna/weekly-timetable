@@ -1,5 +1,6 @@
 import TimeTable from './timetable.js'
 import { NextButton, PrevButton } from './navbuttons.js'
+import { shiftsFromDate } from './backend-client.js'
 
 window.addEventListener('load', () => {
   moment.locale('it')
@@ -26,18 +27,4 @@ function renderPrevWeekButton(date) {
 function renderNextWeekButton(date) {
   const htmlElement = new NextButton(date, renderPage)
   document.querySelector('#next-button').replaceWith(htmlElement)
-}
-
-async function shiftsFromDate(date) {
-  const weekNumber = date.week()
-  console.info(`Fetching week ${weekNumber} ....`)
-  var fetchResponse = await fetch(`./backend/database/week_${weekNumber}.json`)
-  if(fetchResponse.status == 200) {
-    return await fetchResponse.json()
-  }
-
-  console.info(`Week not found, fetching defaults ...`)
-  fetchResponse = await fetch(`./backend/database/default.json`)
-  const databaseContent = await fetchResponse.json()
-  return databaseContent.sort(() => .5 - Math.random())
 }
