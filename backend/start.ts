@@ -21,7 +21,10 @@ app.get('/', async (_request, reply) => {
 app.get('/database/*', async (request, reply) => {
   const filePath = path.join(__dirname, 'database', (request.params as any)['*'])
   const content = fs.readFileSync(filePath, 'utf-8')
-  return reply.type('application/json').send(content)
+  return reply
+    .type('application/json')
+    .header('Access-Control-Allow-Origin', '*')
+    .send(content)
 })
 
 app.get('/edit', async (request, reply) => {
@@ -42,7 +45,7 @@ app.post('/edit', async (request, reply) => {
   const shift = parseInt(queryParams.shift || '0')
   const { action, name } = request.body as any
 
-  switch(action) {
+  switch (action) {
     case 'add':
       addToShift(weekNumber, dayOfWeek, shift, name)
       break;
