@@ -20,6 +20,12 @@ app.get('/', async (_request, reply) => {
 
 app.get('/database/*', async (request, reply) => {
   const filePath = path.join(__dirname, 'database', (request.params as any)['*'])
+  if (!fs.existsSync(filePath))
+    return reply
+      .header('Access-Control-Allow-Origin', '*')
+      .code(404)
+      .send()
+
   const content = fs.readFileSync(filePath, 'utf-8')
   return reply
     .type('application/json')
