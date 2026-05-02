@@ -15,3 +15,7 @@ export async function shiftsFromDate(date) {
   const databaseContent = await fetchResponse.json()
   return databaseContent.sort(() => .5 - Math.random())
 }
+
+export function getEditPageUrlFor(weekNumber, dayOfWeek, shift) {
+  return `${BACKEND_HOST}/edit?week=${weekNumber}&dayOfWeek=${dayOfWeek}&shift=${shift}`
+}

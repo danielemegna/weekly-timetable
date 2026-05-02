@@ -1,3 +1,5 @@
+import { getEditPageUrlFor } from "./backend-client.js"
+
 export default class TimeTable extends HTMLElement {
   
   constructor(weekDay, shifts) {
@@ -14,6 +16,7 @@ export default class TimeTable extends HTMLElement {
 
 function htmlFor(startOfWeek, shifts) {
   const day = startOfWeek.clone()
+  const weekNumber = startOfWeek.week()
 
   const openTable = `
     <table id="time-table" class="pure-table pure-table-bordered ${colorFromWeekNumber(day.week())}">
@@ -31,8 +34,12 @@ function htmlFor(startOfWeek, shifts) {
     tableRows += `
       <tr>
         <td>${day.format("ddd D")}</td>
-        <td>${shifts[i][0].join(", ")}</td>
-        <td>${shifts[i][1].join(", ")}</td>
+        <td onclick="redirectToEditPage(${weekNumber}, ${i}, 0)">
+          ${shifts[i][0].join(", ")}
+        </td>
+        <td onclick="redirectToEditPage(${weekNumber}, ${i}, 1)">
+          ${shifts[i][1].join(", ")}
+        </td>
       </tr>`
     day.add(1, 'days')
   }
@@ -40,6 +47,9 @@ function htmlFor(startOfWeek, shifts) {
   return openTable + tableRows + closeTable
 }
 
+window.redirectToEditPage = function redirectToEditPage(weekNumber, dayOfWeek, shift) {
+  window.location.href = getEditPageUrlFor(weekNumber, dayOfWeek, shift)
+}
 
 function colorFromWeekNumber(n) {
   const CLASSES = ["blue", "green", "purple", "orange", "yellow", "pink", "red"]
