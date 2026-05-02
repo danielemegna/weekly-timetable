@@ -5,7 +5,7 @@
   "license": "ISC",
   "scripts": {
     "build": "tsc",
-    "dev": "tsx watch --include ./views/* start.ts",
+    "dev": "tsx watch --include ./views start.ts",
     "start": "tsx start.ts"
   },
   "devDependencies": {
