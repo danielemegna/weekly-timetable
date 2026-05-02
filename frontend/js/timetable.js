@@ -1,3 +1,6 @@
+import { redirectToEditPage } from './backend-client.js'
+window.redirectToEditPage = redirectToEditPage
+
 export default class TimeTable extends HTMLElement {
   
   constructor(weekDay, shifts) {
@@ -14,6 +17,7 @@ export default class TimeTable extends HTMLElement {
 
 function htmlFor(startOfWeek, shifts) {
   const day = startOfWeek.clone()
+  const weekNumber = startOfWeek.week()
 
   const openTable = `
     <table id="time-table" class="pure-table pure-table-bordered ${colorFromWeekNumber(day.week())}">
@@ -32,7 +36,9 @@ function htmlFor(startOfWeek, shifts) {
       <tr>
         <td>${day.format("ddd D")}</td>
         <td>${shifts[i][0].join(", ")}</td>
-        <td>${shifts[i][1].join(", ")}</td>
+        <td onclick="redirectToEditPage(${weekNumber}, ${i}, 1)">
+          ${shifts[i][1].join(", ")}
+        </td>
       </tr>`
     day.add(1, 'days')
   }
