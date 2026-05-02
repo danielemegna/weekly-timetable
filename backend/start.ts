@@ -1,4 +1,5 @@
 import path from 'path'
+import fs from 'fs'
 import Fastify from 'fastify'
 import fastifyView from '@fastify/view'
 import fastifyStatic from '@fastify/static'
@@ -15,6 +16,12 @@ app.register(require('@fastify/formbody'));
 
 app.get('/', async (_request, reply) => {
   reply.send('Hello, world!')
+})
+
+app.get('/database/*', async (request, reply) => {
+  const filePath = path.join(__dirname, 'database', (request.params as any)['*'])
+  const content = fs.readFileSync(filePath, 'utf-8')
+  return reply.type('application/json').send(content)
 })
 
 app.get('/edit', async (request, reply) => {
