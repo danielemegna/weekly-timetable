@@ -52,9 +52,9 @@ body {
     padding-left: 0.5em;
   }
 
-  &.blue { background-color: #a4c3c8; }
+  &.blue { background-color: #c2e0e5; }
   &.blue thead { background-color: #01ffff; }
-  &.blue tbody tr:nth-last-child(-n+2) { background-color: #75a3b0; }
+  &.blue tbody tr:nth-last-child(-n+2) { background-color: #7ed0e7; }
 
   &.green { background-color: #d8ead2; }
   &.green thead { background-color: #01ff01; }
@@ -64,13 +64,13 @@ body {
   &.orange thead { background-color: #fe9900; }
   &.orange tbody tr:nth-last-child(-n+2) { background-color: #f7b16b; }
 
-  &.pink { background-color: #d7a5c0; }
-  &.pink thead { background-color: #d800d7; }
-  &.pink tbody tr:nth-last-child(-n+2) { background-color: #c27ba3; }
+  &.pink { background-color: #ffbde9; }
+  &.pink thead { background-color: #f871d7; }
+  &.pink tbody tr:nth-last-child(-n+2) { background-color: #ff88cb; }
 
   &.purple { background-color: #dad2ea; }
-  &.purple thead { background-color: #b2a5d3; }
-  &.purple tbody tr:nth-last-child(-n+2) { background-color: #8e7dc3; }
+  &.purple thead { background-color: #ab8aff; }
+  &.purple tbody tr:nth-last-child(-n+2) { background-color: #b2a5d3; }
 
   &.yellow { background-color: #ffe59a; }
   &.yellow thead { background-color: #ffff01; }

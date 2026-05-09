@@ -52,7 +52,7 @@ window.redirectToEditPage = function redirectToEditPage(weekNumber, dayOfWeek, s
 }
 
 function colorFromWeekNumber(n) {
-  const CLASSES = ["blue", "green", "purple", "orange", "yellow", "pink", "red"]
+  const CLASSES = ["blue", "green", "purple", "yellow", "pink"] //, "orange", "red"]
   return CLASSES[n % CLASSES.length]
 }
 
