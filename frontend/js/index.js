@@ -15,7 +15,7 @@ async function renderPage(weekDay) {
 
 async function renderTimeTable(date) {
   const shifts = await shiftsFromDate(date)
-  const htmlElement = new TimeTable(date, shifts, true)
+  const htmlElement = new TimeTable(date, shifts, shouldAllowEdit())
   document.querySelector('#time-table').replaceWith(htmlElement)
 }
 
@@ -27,4 +27,9 @@ function renderPrevWeekButton(date) {
 function renderNextWeekButton(date) {
   const htmlElement = new NextButton(date, renderPage)
   document.querySelector('#next-button').replaceWith(htmlElement)
+}
+
+function shouldAllowEdit() {
+  const params = new URLSearchParams(document.location.search);
+  return params.get("editor") == "federica"
 }
