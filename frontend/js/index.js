@@ -15,7 +15,7 @@ async function renderPage(weekDay) {
 
 async function renderTimeTable(date) {
   const shifts = await shiftsFromDate(date)
-  const htmlElement = new TimeTable(date, shifts)
+  const htmlElement = new TimeTable(date, shifts, true)
   document.querySelector('#time-table').replaceWith(htmlElement)
 }
 

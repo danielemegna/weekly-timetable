@@ -1,11 +1,12 @@
 import { getEditPageUrlFor } from "./backend-client.js"
 
 export default class TimeTable extends HTMLElement {
-  
-  constructor(weekDay, shifts) {
+
+  constructor(weekDay, shifts, allowEdit) {
     super()
     this.startOfWeek = weekDay.startOf('week')
     this.shifts = shifts
+    this.allowEdit = allowEdit
   }
 
   connectedCallback() {
@@ -28,21 +29,28 @@ export default class TimeTable extends HTMLElement {
     const closeTable = `</tbody></table>`
 
     var tableRows = ""
-    for(var i=0; i<7; i++) {
+    for (var dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
       tableRows += `
         <tr>
           <td>${day.format("ddd D")}</td>
-          <td onclick="redirectToEditPage(${weekNumber}, ${i}, 0)">
-            ${this.shifts[i][0].join(", ")}
-          </td>
-          <td onclick="redirectToEditPage(${weekNumber}, ${i}, 1)">
-            ${this.shifts[i][1].join(", ")}
-          </td>
+          ${this.renderCell(weekNumber, dayOfWeek, 0)}
+          ${this.renderCell(weekNumber, dayOfWeek, 1)}
         </tr>`
       day.add(1, 'days')
     }
 
     return openTable + tableRows + closeTable
+  }
+
+  renderCell(weekNumber, dayOfWeek, shiftIndex) {
+    const names = this.shifts[dayOfWeek][shiftIndex].join(", ")
+    if (this.allowEdit) {
+      return `<td onclick="redirectToEditPage(${weekNumber}, ${dayOfWeek}, 1)">
+        ${names}
+      </td>`
+    }
+
+    return `<td>${names}</td>`
   }
 
 }
