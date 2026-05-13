@@ -47,7 +47,7 @@ export default class TimeTable extends HTMLElement {
   renderCell(dayOfWeek, shiftIndex) {
     const names = this.shifts[dayOfWeek][shiftIndex].join(", ")
     if (this.allowEdit) {
-      return `<td onclick="redirectToEditPage(${this.weekNumber}, ${dayOfWeek}, 1)">
+      return `<td onclick="redirectToEditPage(${this.weekNumber}, ${dayOfWeek}, ${shiftIndex})">
         ${names}
       </td>`
     }
