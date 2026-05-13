@@ -77,7 +77,13 @@
       <tr>
         <td>{{this}}</td>
         <td>
-          <button id="deleteButton" type="submit" name="name" value="{{this}}">❌</button>
+          <button
+            id="deleteButton"
+            onclick="return confirm('Sicura di voler eliminare?')"
+            type="submit"
+            name="name"
+            value="{{this}}"
+          >❌</button>
         </td>
       </tr>
       {{/each}}
