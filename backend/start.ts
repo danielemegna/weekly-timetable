@@ -15,7 +15,7 @@ app.register(fastifyView, { engine: { handlebars }, root: path.join(__dirname, '
 app.register(require('@fastify/formbody'));
 
 app.get('/', async (_request, reply) => {
-  reply.send('Hello, world!')
+  return reply.view('index.html')
 })
 
 app.get('/database/*', async (request, reply) => {

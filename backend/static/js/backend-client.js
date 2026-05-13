@@ -1,5 +1,5 @@
 
-const BACKEND_HOST = 'http://localhost:8125'
+const BACKEND_HOST = ''
 const DATABASE_API = BACKEND_HOST + '/database'
 
 export async function shiftsFromDate(date) {
