@@ -93,8 +93,14 @@
 
   <form method="post">
     <h4>Aggiungi:</h4>
-    <input name="name" type="text" />
-    <button id="addButton" type="submit" name="action" value="add">Aggiungi</button>
+    <input id="addName" name="name" type="text" />
+    <button
+      id="addButton"
+      onclick="return document.getElementById('addName').value != ''"
+      type="submit"
+      name="action"
+      value="add"
+    >Aggiungi</button>
   </form>
 
   <button id="closeButton" onclick="window.location.href='/?editor=federica'">Chiudi</button>
