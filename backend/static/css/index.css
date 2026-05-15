@@ -45,6 +45,9 @@ body {
     border-color:rgba(100, 100, 100, 0.25);
     overflow-wrap: break-word;
     padding: 0.3em;
+
+    &.warn { background-color: #ff8c00; }
+    &.empty { background-color: red; }
   }
 
   td:first-child {

@@ -45,14 +45,17 @@ export default class TimeTable extends HTMLElement {
   }
 
   renderCell(dayOfWeek, shiftIndex) {
-    const names = this.shifts[dayOfWeek][shiftIndex].join(", ")
+    const names = this.shifts[dayOfWeek][shiftIndex]
+    const cssClass = names.length === 0 ? 'empty' : names.length === 1 ? 'warn' : ''
+    const joinedNames = names.join(", ")
+
     if (this.allowEdit) {
-      return `<td onclick="redirectToEditPage(${this.weekNumber}, ${dayOfWeek}, ${shiftIndex})">
-        ${names}
+      return `<td class="${cssClass}" onclick="redirectToEditPage(${this.weekNumber}, ${dayOfWeek}, ${shiftIndex})">
+        ${joinedNames}
       </td>`
     }
 
-    return `<td>${names}</td>`
+    return `<td class="${cssClass}">${joinedNames}</td>`
   }
 
   colorFromWeekNumber() {
