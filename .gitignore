@@ -33,5 +33,5 @@ yarn-error.log*
 .npmrc
 
 # ignores database files but default
-!database/default.json
 database/*.json
+!database/default.json
