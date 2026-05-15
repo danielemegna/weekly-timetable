@@ -12,8 +12,7 @@ export async function shiftsFromDate(date) {
 
   console.info(`Week not found, fetching defaults ...`)
   fetchResponse = await fetch(`${DATABASE_API}/default.json`)
-  const databaseContent = await fetchResponse.json()
-  return databaseContent.sort(() => .5 - Math.random())
+  return await fetchResponse.json()
 }
 
 export function getEditPageUrlFor(weekNumber, dayOfWeek, shift) {
