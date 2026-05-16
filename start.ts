@@ -65,7 +65,7 @@ app.post('/edit', async (request, reply) => {
   reply.redirect(`/edit?${new URLSearchParams(queryParams).toString()}`)
 })
 
-app.listen({ port: 8125 }, (err, address) => {
+app.listen({ port: 8125, host: '0.0.0.0' }, (err, address) => {
   if (err) throw err
   console.log(`Server listening at ${address}`)
 })
