@@ -18,7 +18,3 @@ Build and run for production:
 $ docker build -t wtime .
 $ docker run --rm -d -p 8125:8125 --name wtime wtime
 ```
-
-> TODO Dockerfile<br/>
-> yarn install --prod<br/>
-> yarn start
