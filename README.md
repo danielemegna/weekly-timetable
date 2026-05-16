@@ -16,5 +16,5 @@ Build and run for production:
 
 ```
 $ docker build -t wtime .
-$ docker run --rm -d -p 8125:8125 --name wtime wtime
+$ docker run --rm -d -p 8125:8125 -v $PWD/database:/app/database --name wtime wtime
 ```
