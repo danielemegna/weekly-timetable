@@ -24,9 +24,9 @@ body {
 }
 
 #time-table {
-  font-size: 0.9em;
-  margin-top: 1em;
   width: 100%;
+  font-size: 0.9em;
+  margin: 1em 0;
   box-shadow: 5px 10px 8px #888888;
   border-color:rgba(100, 100, 100, 0.25);
 
@@ -88,5 +88,15 @@ body {
   &.red { background-color: #eb999b; }
   &.red thead { background-color: #fe0000; }
   &.red tbody tr:nth-last-child(-n+2) { background-color: #e06665; }
+}
+
+#week-notes {
+  margin-top: 1em;
+  min-height: 6em;
+  background-color: #fcfc7a;
+  font-size: 1.1em;
+  padding: 0.6em;
+  box-shadow: 5px 10px 8px #888888;
+  border-color:rgba(100, 100, 100, 0.25);
 }
 
