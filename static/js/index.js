@@ -20,7 +20,7 @@ async function renderTimeTable(date) {
   const timeTableElement = new TimeTable(date, shifts, shouldAllowEdit())
   document.querySelector('#time-table').replaceWith(timeTableElement)
 
-  const weekNotesElement = new WeekNotes("Questa settimana ricordarsi di ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum consequat mi quis pretium semper. Proin luctus orci ac neque venenatis.")
+  const weekNotesElement = new WeekNotes(weekNotesFrom(shifts))
   document.querySelector('#week-notes').replaceWith(weekNotesElement)
 }
 
@@ -37,4 +37,11 @@ function renderNextWeekButton(date) {
 function shouldAllowEdit() {
   const params = new URLSearchParams(document.location.search);
   return params.get("editor") == "federica"
+}
+
+function weekNotesFrom(shifts) {
+  if(shifts.length < 8) return null
+  if(shifts[7].length < 0) return null
+
+  return shifts[7][0]
 }
