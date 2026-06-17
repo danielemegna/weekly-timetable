@@ -6,11 +6,10 @@ export default class WeekNotes extends HTMLElement {
   }
 
   connectedCallback() {
-    if(!this.notes) {
-      this.outerHTML = '';
-    }
-
-    this.outerHTML = `<div id="week-notes">${this.notes}</div>`
+    this.outerHTML = `<div
+      id="week-notes"
+      style="${!this.notes ? 'display:none' : ''}"
+    >${this.notes}</div>`
   }
 }
 
