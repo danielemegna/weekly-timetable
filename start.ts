@@ -41,7 +41,7 @@ app.get('/edit', async (request, reply) => {
 
   const names = getNamesFor(weekNumber, dayOfWeek, shift)
 
-  return reply.view('edit.html', { names })
+  return reply.view('edit.html', { names, weekNumber })
 })
 
 app.post('/edit', async (request, reply) => {
