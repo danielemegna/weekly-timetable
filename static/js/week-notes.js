@@ -1,8 +1,9 @@
 export default class WeekNotes extends HTMLElement {
 
-  constructor(notes) {
+  constructor(notes, allowEdit) {
     super()
     this.notes = notes
+    this.allowEdit = allowEdit
   }
 
   connectedCallback() {

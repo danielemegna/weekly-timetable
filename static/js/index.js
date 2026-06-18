@@ -16,11 +16,12 @@ async function renderPage(weekDay) {
 
 async function renderTimeTable(date) {
   const shifts = await shiftsFromDate(date)
+  const allowEdit = shouldAllowEdit()
 
-  const timeTableElement = new TimeTable(date, shifts, shouldAllowEdit())
+  const timeTableElement = new TimeTable(date, shifts, allowEdit)
   document.querySelector('#time-table').replaceWith(timeTableElement)
 
-  const weekNotesElement = new WeekNotes(weekNotesFrom(shifts))
+  const weekNotesElement = new WeekNotes(weekNotesFrom(shifts), allowEdit)
   document.querySelector('#week-notes').replaceWith(weekNotesElement)
 }
 
