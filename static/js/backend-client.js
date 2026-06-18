@@ -2,8 +2,7 @@
 const BACKEND_HOST = ''
 const DATABASE_API = BACKEND_HOST + '/database'
 
-export async function shiftsFromDate(date) {
-  const weekNumber = date.week()
+export async function shiftsFromDate(weekNumber) {
   console.info(`Fetching week ${weekNumber} ....`)
   var fetchResponse = await fetch(`${DATABASE_API}/week_${weekNumber}.json`)
   if(fetchResponse.status == 200) {

@@ -2,12 +2,12 @@ import { getEditPageUrlFor } from "./backend-client.js"
 
 export default class TimeTable extends HTMLElement {
 
-  constructor(date, shifts, allowEdit) {
+  constructor(startOfWeek, shifts, allowEdit) {
     super()
-    this.startOfWeek = date.startOf('week')
-    this.weekNumber = date.week()
+    this.startOfWeek = startOfWeek
     this.shifts = shifts
     this.allowEdit = allowEdit
+    this.weekNumber = startOfWeek.week()
   }
 
   connectedCallback() {

@@ -14,11 +14,13 @@ async function renderPage(weekDay) {
   renderNextWeekButton(weekDay.clone())
 }
 
-async function renderTimeTable(date) {
-  const shifts = await shiftsFromDate(date)
+async function renderTimeTable(weekDay) {
+  const weekNumber = weekDay.week()
+  const startOfWeek = weekDay.startOf('week')
+  const shifts = await shiftsFromDate(weekNumber)
   const allowEdit = shouldAllowEdit()
 
-  const timeTableElement = new TimeTable(date, shifts, allowEdit)
+  const timeTableElement = new TimeTable(startOfWeek, shifts, allowEdit)
   document.querySelector('#time-table').replaceWith(timeTableElement)
 
   const weekNotesElement = new WeekNotes(weekNotesFrom(shifts), allowEdit)
