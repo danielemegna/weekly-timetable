@@ -8,10 +8,17 @@ export default class WeekNotes extends HTMLElement {
   }
 
   connectedCallback() {
-    this.outerHTML = `<div
-      id="week-notes"
-      style="${!this.notes ? 'display:none' : ''}"
-    >${this.notes}</div>`
+    var html = `<div id="week-notes" `
+    html += `class="${this.notes ? 'full' : 'empty'}" `
+
+    if (this.allowEdit)
+      html += `onclick="alert('Edit action: ` + this.weekNumber + `')" `
+
+    if (!this.allowEdit && !this.notes)
+      html += `style="display: none" `
+
+    html += '>' + (this.notes ?? "+") + '</div>'
+    this.outerHTML = html;
   }
 }
 
