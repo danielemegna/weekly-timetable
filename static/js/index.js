@@ -23,7 +23,7 @@ async function renderTimeTable(weekDay) {
   const timeTableElement = new TimeTable(startOfWeek, shifts, allowEdit)
   document.querySelector('#time-table').replaceWith(timeTableElement)
 
-  const weekNotesElement = new WeekNotes(weekNotesFrom(shifts), allowEdit)
+  const weekNotesElement = new WeekNotes(weekNotesFrom(shifts), weekNumber, allowEdit)
   document.querySelector('#week-notes').replaceWith(weekNotesElement)
 }
 

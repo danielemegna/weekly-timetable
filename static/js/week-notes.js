@@ -1,8 +1,9 @@
 export default class WeekNotes extends HTMLElement {
 
-  constructor(notes, allowEdit) {
+  constructor(notes, weekNumber, allowEdit) {
     super()
     this.notes = notes
+    this.weekNumber = weekNumber
     this.allowEdit = allowEdit
   }
 
