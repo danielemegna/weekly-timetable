@@ -65,7 +65,7 @@ export default class TimeTable extends HTMLElement {
 
 }
 
-window.redirectToEditPage = function redirectToEditPage(weekNumber, dayOfWeek, shift) {
+window.redirectToEditPage = function(weekNumber, dayOfWeek, shift) {
   window.location.href = getEditPageUrlFor(weekNumber, dayOfWeek, shift)
 }
 

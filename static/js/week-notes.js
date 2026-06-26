@@ -1,3 +1,5 @@
+import { getEditWeekNotesPageUrlFor } from "./backend-client.js"
+
 export default class WeekNotes extends HTMLElement {
 
   constructor(notes, weekNumber, allowEdit) {
@@ -12,7 +14,7 @@ export default class WeekNotes extends HTMLElement {
     html += `class="${this.notes ? 'full' : 'empty'}" `
 
     if (this.allowEdit)
-      html += `onclick="alert('Edit action: ` + this.weekNumber + `')" `
+      html += `onclick="redirectToEditWeekNotesPage(${this.weekNumber})" `
 
     if (!this.allowEdit && !this.notes)
       html += `style="display: none" `
@@ -20,6 +22,10 @@ export default class WeekNotes extends HTMLElement {
     html += '>' + (this.notes ?? "+") + '</div>'
     this.outerHTML = html;
   }
+}
+
+window.redirectToEditWeekNotesPage = function(weekNumber, dayOfWeek, shift) {
+  window.location.href = getEditWeekNotesPageUrlFor(weekNumber)
 }
 
 // name unused since we built it programmatically

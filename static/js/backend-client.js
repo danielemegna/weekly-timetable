@@ -17,3 +17,7 @@ export async function shiftsFromDate(weekNumber) {
 export function getEditPageUrlFor(weekNumber, dayOfWeek, shift) {
   return `${BACKEND_HOST}/edit?week=${weekNumber}&dayOfWeek=${dayOfWeek}&shift=${shift}`
 }
+
+export function getEditWeekNotesPageUrlFor(weekNumber) {
+  return `${BACKEND_HOST}/edit-week-notes?week=${weekNumber}`
+}

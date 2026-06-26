@@ -7,6 +7,8 @@ import handlebars from 'handlebars'
 import { getNamesFor } from './usecases/view'
 import { addToShift } from './usecases/add'
 import { deleteFromShift } from './usecases/delete'
+import { getWeekNotesFor } from './usecases/view-week-notes'
+import { storeWeekNotes } from './usecases/store-week-notes'
 
 const app = Fastify()
 
@@ -63,6 +65,26 @@ app.post('/edit', async (request, reply) => {
   }
 
   reply.redirect(`/edit?${new URLSearchParams(queryParams).toString()}`)
+})
+
+app.get('/edit-week-notes', async (request, reply) => {
+  const queryParams = request.query as Record<string, string>
+  const weekNumber = parseInt(queryParams.week || '1')
+
+  const notes = getWeekNotesFor(weekNumber)
+
+  return reply.view('edit-week-notes.html', { notes, weekNumber })
+})
+
+app.post('/edit-week-notes', async (request, reply) => {
+  const queryParams = request.query as Record<string, string>
+  const weekNumber = parseInt(queryParams.week || '1')
+  const { notes } = request.body as any
+
+  storeWeekNotes(notes, weekNumber)
+
+  // auto-close after save
+  reply.redirect(`/?editor=federica&weekNumber=${weekNumber}`)
 })
 
 app.listen({ port: 8125, host: '0.0.0.0' }, (err, address) => {
