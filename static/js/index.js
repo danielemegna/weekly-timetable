@@ -46,5 +46,8 @@ function weekNotesFrom(shifts) {
   if(shifts.length < 8) return null
   if(shifts[7].length < 0) return null
 
-  return shifts[7][0]
+  const notes = shifts[7][0]
+  if(!notes || notes == "") return null
+
+  return notes
 }
