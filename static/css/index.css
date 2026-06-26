@@ -92,12 +92,24 @@ body {
 
 #week-notes {
   margin-top: 1em;
-  min-height: 6em;
-  background-color: #ffffb0;
-  font-size: 1.05em;
   padding: 0.6em;
+  background-color: #ffffb0;
+  border: 1px solid #e6c85c;
+  font-size: 1.05em;
   box-shadow: 5px 10px 8px #888888;
-  border-color:rgba(100, 100, 100, 0.25);
-  white-space: break-spaces;
+
+  &.full {
+    min-height: 6em;
+    white-space: break-spaces;
+  }
+
+  &.empty {
+    border-radius: 20px;
+    width: 20px;
+    text-align: center;
+    vertical-align: middle;
+    color:#d0b44d;
+    &:before { content: "+"; }
+  }
 }
 

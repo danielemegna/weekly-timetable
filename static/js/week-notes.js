@@ -19,7 +19,7 @@ export default class WeekNotes extends HTMLElement {
     if (!this.allowEdit && !this.notes)
       html += `style="display: none" `
 
-    html += '>' + (this.notes ?? "+") + '</div>'
+    html += '>' + (this.notes ?? "") + '</div>'
     this.outerHTML = html;
   }
 }
