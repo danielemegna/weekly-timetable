@@ -95,7 +95,7 @@ body {
   padding: 0.6em;
   background-color: #ffffb0;
   border: 1px solid #e6c85c;
-  font-size: 1.05em;
+  font-size: 1em;
   box-shadow: 5px 10px 8px #888888;
 
   &.full {
