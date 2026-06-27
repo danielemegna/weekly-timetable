@@ -8,12 +8,19 @@
   <body>
     <div id="header">
       <div id="prev-button"></div>
-      <img width="140px" src="./img/logo.png" onClick="window.location.reload();" />
+      <img width="140px" src="./img/logo.png" onClick="goToFirstWeek()" />
       <div id="next-button"></div>
     </div>
     <div id="time-table"></div>
     <div id="week-notes"></div>
     <script src="js/moment-with-locales.min.js"></script>
     <script type="module" src="js/index.js"></script>
+    <script>
+      function goToFirstWeek() {
+        var visitingUrlSearchParams = new URLSearchParams(location.search)
+        visitingUrlSearchParams.delete('weekNumber')
+        location.search = visitingUrlSearchParams.toString()
+      }
+    </script>
   </body>
 </html>
