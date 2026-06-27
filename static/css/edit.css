@@ -1,0 +1,27 @@
+body {
+  background-image: url("/img/background.jpeg");
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: large;
+  padding: 1.2em;
+}
+
+h1 {
+  text-decoration: underline;
+  font-family: "Chewy", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 2.6em;
+}
+
+form { overflow: hidden; }
+
+#addButton, #saveButton, #closeButton {
+  margin-top: 0.6em;
+  float: right;
+  border-radius: 8px;
+  padding: 6px 18px;
+  box-shadow: 2px 3px 4px rgba(0,0,0,0.15);
+}
+
+#addButton, #saveButton { background-color: #ffe79b; border: 1px solid #e6c85c; }
+#closeButton { background-color: #f6f6f6; border: 1px solid #c2c1bd; }
