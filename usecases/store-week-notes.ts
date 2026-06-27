@@ -1,15 +1,13 @@
-import fs from 'fs'
-import path from 'path'
+import { getDatabaseOrThrowError, storeDatabase } from './db-access'
 
 export function storeWeekNotes(notes: string, weekNumber: number): void {
-  const filePath = path.join(__dirname, '..', 'database', `week_${weekNumber}.json`)
-  const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
+  var db = getDatabaseOrThrowError(weekNumber)
 
-  if (data.length < 8) {
-    data.push([notes])
+  if (db.length < 8) {
+    db.push([notes])
   } else {
-    data[7] = [notes]
+    db[7] = [notes]
   }
 
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8')
+  storeDatabase(db, weekNumber)
 }
