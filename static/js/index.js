@@ -5,7 +5,10 @@ import { shiftsFromDate } from './backend-client.js'
 
 window.addEventListener('load', () => {
   moment.locale('it')
-  renderPage(moment())
+  const params = new URLSearchParams(document.location.search)
+  const weekParam = params.get('weekNumber')
+  const dateToBeUsed = weekParam ? moment().week(parseInt(weekParam)) : moment()
+  renderPage(dateToBeUsed)
 })
 
 async function renderPage(weekDay) {
