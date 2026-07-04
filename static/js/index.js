@@ -1,7 +1,7 @@
 import TimeTable from './timetable.js'
 import WeekNotes from './week-notes.js'
 import { NextButton, PrevButton } from './navbuttons.js'
-import { shiftsFromDate } from './backend-client.js'
+import { fetchWeekData } from './backend-client.js'
 
 window.addEventListener('load', () => {
   moment.locale('it')
@@ -20,13 +20,14 @@ async function renderPage(weekDay) {
 async function renderTimeTable(weekDay) {
   const weekNumber = weekDay.week()
   const startOfWeek = weekDay.startOf('week')
-  const shifts = await shiftsFromDate(weekNumber)
   const allowEdit = shouldAllowEdit()
+
+  const {shifts, notes} = await fetchWeekData(weekNumber)
 
   const timeTableElement = new TimeTable(startOfWeek, shifts, allowEdit)
   document.querySelector('#time-table').replaceWith(timeTableElement)
 
-  const weekNotesElement = new WeekNotes(weekNotesFrom(shifts), weekNumber, allowEdit)
+  const weekNotesElement = new WeekNotes(notes, weekNumber, allowEdit)
   document.querySelector('#week-notes').replaceWith(weekNotesElement)
 }
 
@@ -43,14 +44,4 @@ function renderNextWeekButton(date) {
 function shouldAllowEdit() {
   const params = new URLSearchParams(document.location.search);
   return params.get("editor") == "federica"
-}
-
-function weekNotesFrom(shifts) {
-  if(shifts.length < 8) return null
-  if(shifts[7].length < 0) return null
-
-  const notes = shifts[7][0]
-  if(!notes || notes == "") return null
-
-  return notes
 }
