@@ -25,7 +25,7 @@ export default class TimeTable extends HTMLElement {
       <thead><tr>
         <th>${this.startOfWeek.format("MM.YYYY").toUpperCase()}</th>
         <th>Mattino</th>
-        <th>Sera</th>
+        <th>Pomeriggio</th>
       </tr></thead>`
 
     var tableRows = "<tbody>"
