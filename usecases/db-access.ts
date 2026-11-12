@@ -2,24 +2,40 @@ import fs from 'fs'
 import path from 'path'
 
 export function getDatabaseOrCreateFromDefault(weekNumber: number): any {
-  const dbFolder = path.join(__dirname, '..', 'database')
-  const weekFilePath = path.join(dbFolder, `week_${weekNumber}.json`)
+  const weekFilePath = dbFilePath(`week_${weekNumber}`)
 
   if (!fs.existsSync(weekFilePath))
-    fs.copyFileSync(path.join(dbFolder, 'default.json'), weekFilePath)
+    fs.copyFileSync(dbFilePath('default'), weekFilePath)
 
   return JSON.parse(fs.readFileSync(weekFilePath, 'utf-8'))
 }
 
 export function getDatabaseOrThrowError(weekNumber: number): any {
-  const weekFilePath = path.join(__dirname, '..', 'database', `week_${weekNumber}.json`)
+  const weekFilePath = dbFilePath(`week_${weekNumber}`)
   if (!fs.existsSync(weekFilePath))
     throw Error('Cannot find database for week ' + weekNumber)
 
   return JSON.parse(fs.readFileSync(weekFilePath, 'utf-8'))
 }
 
+export function getDefaultShiftsDatabase(): any {
+  const defaultShiftFilePath = dbFilePath('default')
+  if (!fs.existsSync(defaultShiftFilePath))
+    throw Error('Cannot find database of default shifts!')
+
+  return JSON.parse(fs.readFileSync(defaultShiftFilePath, 'utf-8'))
+}
+
 export function storeDatabase(data: any, weekNumber: number): void {
-  const weekFilePath = path.join(__dirname, '..', 'database', `week_${weekNumber}.json`)
+  const weekFilePath = dbFilePath(`week_${weekNumber}`)
   fs.writeFileSync(weekFilePath, JSON.stringify(data, null, 2), 'utf-8')
+}
+
+export function storeDefaultShiftsDatabase(data: any): void {
+  const defaultShiftFilePath = dbFilePath('default')
+  fs.writeFileSync(defaultShiftFilePath, JSON.stringify(data, null, 2), 'utf-8')
+}
+
+function dbFilePath(name: string): string {
+  return path.join(__dirname, '..', 'database', `${name}.json`)
 }
