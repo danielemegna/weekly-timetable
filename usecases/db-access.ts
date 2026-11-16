@@ -2,6 +2,9 @@ import fs from 'fs'
 import path from 'path'
 
 export function getDatabaseOrCreateFromDefault(weekNumber: number): any {
+  if (Number.isNaN(weekNumber))
+    throw Error('Cannot get or create database for week NaN')
+
   const weekFilePath = dbFilePath(`week_${weekNumber}`)
 
   if (!fs.existsSync(weekFilePath))

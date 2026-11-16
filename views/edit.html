@@ -39,7 +39,7 @@
   </style>
 </head>
 <body>
-  <h1>Modifica turno</h1>
+  <h1>Modifica turno{{#if isDefaultWeek}} *{{/if}}</h1>
 
   <form method="post">
     <table>
@@ -77,7 +77,7 @@
     >Aggiungi</button>
   </form>
 
-  <button id="closeButton" onclick="window.location.href='/?editor=federica&weekNumber={{weekNumber}}'">Chiudi</button>
+  <button id="closeButton" onclick="window.location.href='{{{closeUrl}}}'">Chiudi</button>
 
 </body>
 </html>

@@ -4,9 +4,9 @@ import Fastify from 'fastify'
 import fastifyView from '@fastify/view'
 import fastifyStatic from '@fastify/static'
 import handlebars from 'handlebars'
-import { getNamesFor } from './usecases/view'
-import { addToShift } from './usecases/add'
-import { deleteFromShift } from './usecases/delete'
+import { getDefaultNamesFor, getNamesFor } from './usecases/view'
+import { addToShift, addToShiftAsDefault } from './usecases/add'
+import { deleteFromDefaultShift, deleteFromShift } from './usecases/delete'
 import { getWeekNotesFor } from './usecases/view-week-notes'
 import { storeWeekNotes } from './usecases/store-week-notes'
 
@@ -37,28 +37,43 @@ app.get('/database/*', async (request, reply) => {
 
 app.get('/edit', async (request, reply) => {
   const queryParams = request.query as Record<string, string>
-  const weekNumber = parseInt(queryParams.week || '1')
-  const dayOfWeek = parseInt(queryParams.dayOfWeek || '0')
-  const shift = parseInt(queryParams.shift || '0')
+  const target = parseEditTarget(queryParams)
+  if (typeof target === 'string')
+    return reply.code(400).send(target)
 
-  const names = getNamesFor(weekNumber, dayOfWeek, shift)
+  const { isDefaultWeek, weekNumber, dayOfWeek, shift } = target
+  const names = isDefaultWeek
+    ? getDefaultNamesFor(dayOfWeek, shift)
+    : getNamesFor(weekNumber, dayOfWeek, shift)
 
-  return reply.view('edit.html', { names, weekNumber })
+  return reply.view('edit.html', {
+    names,
+    isDefaultWeek,
+    closeUrl: isDefaultWeek ? '/?editor=federica' : `/?editor=federica&weekNumber=${weekNumber}`,
+  })
 })
 
 app.post('/edit', async (request, reply) => {
   const queryParams = request.query as Record<string, string>
-  const weekNumber = parseInt(queryParams.week || '1')
-  const dayOfWeek = parseInt(queryParams.dayOfWeek || '0')
-  const shift = parseInt(queryParams.shift || '0')
+  const target = parseEditTarget(queryParams)
+  if (typeof target === 'string')
+    return reply.code(400).send(target)
+
+  const { isDefaultWeek, weekNumber, dayOfWeek, shift } = target
   const { action, name } = request.body as any
 
   switch (action) {
     case 'add':
-      addToShift(weekNumber, dayOfWeek, shift, name)
+      if (isDefaultWeek)
+        addToShiftAsDefault(dayOfWeek, shift, name)
+      else
+        addToShift(weekNumber, dayOfWeek, shift, name)
       break;
     case 'delete':
-      deleteFromShift(weekNumber, dayOfWeek, shift, name)
+      if (isDefaultWeek)
+        deleteFromDefaultShift(dayOfWeek, shift, name)
+      else
+        deleteFromShift(weekNumber, dayOfWeek, shift, name)
       break;
     default:
       throw Error(`Unknown edit action ${action}`)
@@ -66,6 +81,32 @@ app.post('/edit', async (request, reply) => {
 
   reply.redirect(`/edit?${new URLSearchParams(queryParams).toString()}`)
 })
+
+type EditTarget = {
+  isDefaultWeek: boolean
+  weekNumber: number
+  dayOfWeek: number
+  shift: number
+}
+
+function parseEditTarget(queryParams: Record<string, string>): EditTarget | string {
+  const week = queryParams.week || '1'
+  const isDefaultWeek = week === 'default'
+  const weekNumber = parseInt(week)
+  const dayOfWeek = parseInt(queryParams.dayOfWeek || '')
+  const shift = parseInt(queryParams.shift || '')
+
+  if (!isDefaultWeek && Number.isNaN(weekNumber))
+    return `Invalid week query parameter: ${week}`
+
+  if (Number.isNaN(dayOfWeek))
+    return 'The dayOfWeek query parameter is mandatory'
+
+  if (Number.isNaN(shift))
+    return 'The shift query parameter is mandatory'
+
+  return { isDefaultWeek, weekNumber, dayOfWeek, shift }
+}
 
 app.get('/edit-week-notes', async (request, reply) => {
   const queryParams = request.query as Record<string, string>
