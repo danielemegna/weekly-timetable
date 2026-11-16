@@ -45,8 +45,8 @@ app.get('/edit', async (request, reply) => {
 
     return reply.view('edit.html', {
       names,
+      weekNumber,
       isDefaultWeek,
-      closeUrl: isDefaultWeek ? '/?editor=federica' : `/?editor=federica&weekNumber=${weekNumber}`,
     })
   } catch (error) {
     return reply.code(400).send((error as Error).message)

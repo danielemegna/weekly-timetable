@@ -77,7 +77,12 @@
     >Aggiungi</button>
   </form>
 
-  <button id="closeButton" onclick="window.location.href='{{{closeUrl}}}'">Chiudi</button>
+  <button
+    id="closeButton"
+    onclick="window.location.href='{{#if isDefaultWeek}}/?editor=federica{{else}}/?editor=federica&weekNumber={{weekNumber}}{{/if}}'"
+  >
+    Chiudi
+  </button>
 
 </body>
 </html>
