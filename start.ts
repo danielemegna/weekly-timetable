@@ -37,76 +37,50 @@ app.get('/database/*', async (request, reply) => {
 
 app.get('/edit', async (request, reply) => {
   const queryParams = request.query as Record<string, string>
-  const target = parseEditTarget(queryParams)
-  if (typeof target === 'string')
-    return reply.code(400).send(target)
+  try {
+    const { isDefaultWeek, weekNumber, dayOfWeek, shift } = parseEditTarget(queryParams)
+    const names = isDefaultWeek
+      ? getDefaultNamesFor(dayOfWeek, shift)
+      : getNamesFor(weekNumber, dayOfWeek, shift)
 
-  const { isDefaultWeek, weekNumber, dayOfWeek, shift } = target
-  const names = isDefaultWeek
-    ? getDefaultNamesFor(dayOfWeek, shift)
-    : getNamesFor(weekNumber, dayOfWeek, shift)
-
-  return reply.view('edit.html', {
-    names,
-    isDefaultWeek,
-    closeUrl: isDefaultWeek ? '/?editor=federica' : `/?editor=federica&weekNumber=${weekNumber}`,
-  })
+    return reply.view('edit.html', {
+      names,
+      isDefaultWeek,
+      closeUrl: isDefaultWeek ? '/?editor=federica' : `/?editor=federica&weekNumber=${weekNumber}`,
+    })
+  } catch (error) {
+    return reply.code(400).send((error as Error).message)
+  }
 })
 
 app.post('/edit', async (request, reply) => {
   const queryParams = request.query as Record<string, string>
-  const target = parseEditTarget(queryParams)
-  if (typeof target === 'string')
-    return reply.code(400).send(target)
+  try {
+    const { isDefaultWeek, weekNumber, dayOfWeek, shift } = parseEditTarget(queryParams)
+    const { action, name } = request.body as any
 
-  const { isDefaultWeek, weekNumber, dayOfWeek, shift } = target
-  const { action, name } = request.body as any
+    switch (action) {
+      case 'add':
+        if (isDefaultWeek)
+          addToShiftAsDefault(dayOfWeek, shift, name)
+        else
+          addToShift(weekNumber, dayOfWeek, shift, name)
+        break;
+      case 'delete':
+        if (isDefaultWeek)
+          deleteFromDefaultShift(dayOfWeek, shift, name)
+        else
+          deleteFromShift(weekNumber, dayOfWeek, shift, name)
+        break;
+      default:
+        throw Error(`Unknown edit action ${action}`)
+    }
 
-  switch (action) {
-    case 'add':
-      if (isDefaultWeek)
-        addToShiftAsDefault(dayOfWeek, shift, name)
-      else
-        addToShift(weekNumber, dayOfWeek, shift, name)
-      break;
-    case 'delete':
-      if (isDefaultWeek)
-        deleteFromDefaultShift(dayOfWeek, shift, name)
-      else
-        deleteFromShift(weekNumber, dayOfWeek, shift, name)
-      break;
-    default:
-      throw Error(`Unknown edit action ${action}`)
+    reply.redirect(`/edit?${new URLSearchParams(queryParams).toString()}`)
+  } catch (error) {
+    return reply.code(400).send((error as Error).message)
   }
-
-  reply.redirect(`/edit?${new URLSearchParams(queryParams).toString()}`)
 })
-
-type EditTarget = {
-  isDefaultWeek: boolean
-  weekNumber: number
-  dayOfWeek: number
-  shift: number
-}
-
-function parseEditTarget(queryParams: Record<string, string>): EditTarget | string {
-  const week = queryParams.week || '1'
-  const isDefaultWeek = week === 'default'
-  const weekNumber = parseInt(week)
-  const dayOfWeek = parseInt(queryParams.dayOfWeek || '')
-  const shift = parseInt(queryParams.shift || '')
-
-  if (!isDefaultWeek && Number.isNaN(weekNumber))
-    return `Invalid week query parameter: ${week}`
-
-  if (Number.isNaN(dayOfWeek))
-    return 'The dayOfWeek query parameter is mandatory'
-
-  if (Number.isNaN(shift))
-    return 'The shift query parameter is mandatory'
-
-  return { isDefaultWeek, weekNumber, dayOfWeek, shift }
-}
 
 app.get('/edit-week-notes', async (request, reply) => {
   const queryParams = request.query as Record<string, string>
@@ -132,3 +106,29 @@ app.listen({ port: 8125, host: '0.0.0.0' }, (err, address) => {
   if (err) throw err
   console.log(`Server listening at ${address}`)
 })
+
+type EditTarget = {
+  isDefaultWeek: boolean
+  weekNumber: number
+  dayOfWeek: number
+  shift: number
+}
+
+function parseEditTarget(queryParams: Record<string, string>): EditTarget {
+  const week = queryParams.week || '1'
+  const isDefaultWeek = week === 'default'
+  const weekNumber = parseInt(week)
+  const dayOfWeek = parseInt(queryParams.dayOfWeek || '')
+  const shift = parseInt(queryParams.shift || '')
+
+  if (!isDefaultWeek && Number.isNaN(weekNumber))
+    throw Error(`Invalid week query parameter: ${week}`)
+
+  if (Number.isNaN(dayOfWeek))
+    throw Error('The dayOfWeek query parameter is mandatory')
+
+  if (Number.isNaN(shift))
+    throw Error('The shift query parameter is mandatory')
+
+  return { isDefaultWeek, weekNumber, dayOfWeek, shift }
+}
