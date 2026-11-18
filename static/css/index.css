@@ -88,6 +88,10 @@ body {
   &.red { background-color: #eb999b; }
   &.red thead { background-color: #fe0000; }
   &.red tbody tr:nth-last-child(-n+2) { background-color: #e06665; }
+
+  &.white { background-color: white; }
+  &.white thead { background-color: #e6e5e5; }
+  &.white tbody tr:nth-last-child(-n+2) { background-color: #e6e5e5; }
 }
 
 #week-notes {
