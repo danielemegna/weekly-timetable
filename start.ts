@@ -9,6 +9,7 @@ import { addToShift, addToShiftAsDefault } from './usecases/add'
 import { deleteFromDefaultShift, deleteFromShift } from './usecases/delete'
 import { getWeekNotesFor } from './usecases/view-week-notes'
 import { storeWeekNotes } from './usecases/store-week-notes'
+import { getDatabaseOrDefault } from './usecases/db-access'
 
 const app = Fastify()
 
@@ -18,6 +19,15 @@ app.register(require('@fastify/formbody'));
 
 app.get('/', async (_request, reply) => {
   return reply.view('index.html')
+})
+
+app.get('/v2', async (request, reply) => {
+  const queryParams = request.query as Record<string, string>
+  const weekNumber = parseInt(queryParams.week || '47')
+
+  const weekDbContent = getDatabaseOrDefault(weekNumber)
+
+  return reply.view('v2.html', { db: weekDbContent })
 })
 
 app.get('/database/*', async (request, reply) => {

@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fff6da">
+    <title>Turni in Gattile - Animal's Emergency</title>
+    <link rel="stylesheet" href="css/pure-min.css" />
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+  <body>
+    <div id="header">
+      <prev-button id="prev-button"></prev-button>
+      <img width="140px" src="./img/logo.png" onClick="goToFirstWeek()" />
+      <next-button id="next-button"></next-button>
+    </div>
+    <table id="time-table" class="pure-table pure-table-bordered purple">
+      <thead>
+        <tr>
+          <th>11.2026</th>
+          <th>Mattino</th>
+          <th>Pomeriggio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>lun 16</td>
+          <td class="warn">Maria Pia</td>
+          <td class="">Ale D, Ale M, Mony, Roby dalle 17:15</td>
+        </tr>
+        <tr>
+          <td>mar 17</td>
+          <td class="">Giancarla, Artem, Florentina supp</td>
+          <td class="empty"></td>
+        </tr>
+        <tr>
+          <td>mer 18</td>
+          <td class="warn">Maria Pia</td>
+          <td class="warn">Chantal</td>
+        </tr>
+        <tr>
+          <td>gio 19</td>
+          <td class="warn">Beatrice</td>
+          <td class="warn">Yle e Mamy</td>
+        </tr>
+        <tr>
+          <td>ven 20</td>
+          <td class="">Giancarla, Ele M, Marina</td>
+          <td class="">Julia, Florentina supp.</td>
+        </tr>
+        <tr>
+          <td>sab 21</td>
+          <td class="warn">Claudia</td>
+          <td class="">Daniele M, Federica</td>
+        </tr>
+        <tr>
+          <td>dom 22</td>
+          <td class="">Martina, Daniela</td>
+          <td class="warn">Daniele R</td>
+        </tr>
+      </tbody>
+    </table>
+    {{#if db.notes }}
+      <div id="week-notes" class="full">{{db.notes}}</div>
+    {{else}}
+      <div id="week-notes" class="hidden"></div>
+    {{/if}}
+    <script>
+      function goToFirstWeek() {
+        var visitingUrlSearchParams = new URLSearchParams(location.search)
+        visitingUrlSearchParams.delete('weekNumber')
+        location.search = visitingUrlSearchParams.toString()
+      }
+    </script>
+  </body>
+</html>

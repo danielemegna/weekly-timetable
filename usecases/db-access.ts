@@ -1,6 +1,15 @@
 import fs from 'fs'
 import path from 'path'
 
+export function getDatabaseOrDefault(weekNumber: number): any {
+  let weekFilePath = dbFilePath(`week_${weekNumber}`)
+
+  if (!fs.existsSync(weekFilePath))
+    weekFilePath = dbFilePath('default')
+
+  return JSON.parse(fs.readFileSync(weekFilePath, 'utf-8'))
+}
+
 export function getDatabaseOrCreateFromDefault(weekNumber: number): any {
   if (Number.isNaN(weekNumber))
     throw Error('Cannot get or create database for week NaN')
