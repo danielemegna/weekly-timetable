@@ -15,47 +15,19 @@
     <table id="time-table" class="pure-table pure-table-bordered purple">
       <thead>
         <tr>
-          <th>11.2026</th>
+          <th>{{monthYear monday}}</th>
           <th>Mattino</th>
           <th>Pomeriggio</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>lun 16</td>
-          <td class="warn">Maria Pia</td>
-          <td class="">Ale D, Ale M, Mony, Roby dalle 17:15</td>
-        </tr>
-        <tr>
-          <td>mar 17</td>
-          <td class="">Giancarla, Artem, Florentina supp</td>
-          <td class="empty"></td>
-        </tr>
-        <tr>
-          <td>mer 18</td>
-          <td class="warn">Maria Pia</td>
-          <td class="warn">Chantal</td>
-        </tr>
-        <tr>
-          <td>gio 19</td>
-          <td class="warn">Beatrice</td>
-          <td class="warn">Yle e Mamy</td>
-        </tr>
-        <tr>
-          <td>ven 20</td>
-          <td class="">Giancarla, Ele M, Marina</td>
-          <td class="">Julia, Florentina supp.</td>
-        </tr>
-        <tr>
-          <td>sab 21</td>
-          <td class="warn">Claudia</td>
-          <td class="">Daniele M, Federica</td>
-        </tr>
-        <tr>
-          <td>dom 22</td>
-          <td class="">Martina, Daniela</td>
-          <td class="warn">Daniele R</td>
-        </tr>
+        {{#each db.shifts}}
+          <tr>
+            <td>{{weekdayLabel ../monday @index}} {{dayOfMonth ../monday @index}}</td>
+            <td class="{{shiftClass (lookup this 0)}}">{{joinNames (lookup this 0)}}</td>
+            <td class="{{shiftClass (lookup this 1)}}">{{joinNames (lookup this 1)}}</td>
+          </tr>
+        {{/each}}
       </tbody>
     </table>
     {{#if db.notes }}

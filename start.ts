@@ -22,12 +22,19 @@ app.get('/', async (_request, reply) => {
 })
 
 app.get('/v2', async (request, reply) => {
-  const queryParams = request.query as Record<string, string>
-  const weekNumber = parseInt(queryParams.week || '47')
+  const { weekNumber: weekParam } = request.query as Record<string, string>
+  const today = new Date()
+  const requestedWeek = weekParam ? parseInt(weekParam) : NaN
+  const hasWeekOverride = !Number.isNaN(requestedWeek)
+  const { weekNumber: currentWeek, year: isoYear } = getIsoWeek(today)
+  const weekNumber = hasWeekOverride ? requestedWeek : currentWeek
+  const monday = getMondayOfWeek(hasWeekOverride
+    ? getDateOfIsoWeek(weekNumber, isoYear)
+    : today)
 
   const weekDbContent = getDatabaseOrDefault(weekNumber)
 
-  return reply.view('v2.html', { db: weekDbContent })
+  return reply.view('v2.html', { db: weekDbContent, monday })
 })
 
 app.get('/database/*', async (request, reply) => {
@@ -141,4 +148,46 @@ function parseEditTarget(queryParams: Record<string, string>): EditTarget {
     throw Error('The shift query parameter is mandatory')
 
   return { isDefaultWeek, weekNumber, dayOfWeek, shift }
+}
+
+handlebars.registerHelper('monthYear', (monday: Date) =>
+  `${('0' + (monday.getMonth() + 1)).slice(-2)}.${monday.getFullYear()}`)
+
+handlebars.registerHelper('weekdayLabel', (_monday: Date, dayOfWeek: number) =>
+  ['lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom'][dayOfWeek])
+
+handlebars.registerHelper('dayOfMonth', (monday: Date, dayOfWeek: number) => {
+  const day = new Date(monday)
+  day.setDate(day.getDate() + dayOfWeek)
+  return day.getDate()
+})
+
+handlebars.registerHelper('shiftClass', (names: string[]) =>
+  !names || names.length === 0 ? 'empty' : names.length === 1 ? 'warn' : '')
+
+handlebars.registerHelper('joinNames', (names: string[]) => names ? names.join(', ') : '')
+
+function getIsoWeek(date: Date): { weekNumber: number, year: number } {
+  const thursday = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
+  thursday.setUTCDate(thursday.getUTCDate() - ((thursday.getUTCDay() + 6) % 7) + 3)
+
+  const firstThursday = new Date(Date.UTC(thursday.getUTCFullYear(), 0, 4))
+  firstThursday.setUTCDate(firstThursday.getUTCDate() - ((firstThursday.getUTCDay() + 6) % 7) + 3)
+
+  return {
+    weekNumber: 1 + Math.round((thursday.getTime() - firstThursday.getTime()) / 604800000),
+    year: thursday.getUTCFullYear(),
+  }
+}
+
+function getMondayOfWeek(date: Date): Date {
+  const monday = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+  monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7))
+  return monday
+}
+
+function getDateOfIsoWeek(weekNumber: number, isoYear: number): Date {
+  const monday = getMondayOfWeek(new Date(isoYear, 0, 4))
+  monday.setDate(monday.getDate() + (weekNumber - 1) * 7)
+  return monday
 }
