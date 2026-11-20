@@ -24,7 +24,7 @@ async function renderTimeTable(weekDay) {
 
   const {shifts, notes} = await fetchWeekData(weekNumber)
 
-  const timeTableElement = new TimeTable(startOfWeek, shifts, allowEdit, false)
+  const timeTableElement = new TimeTable(startOfWeek, shifts, allowEdit)
   document.querySelector('#time-table').replaceWith(timeTableElement)
 
   const weekNotesElement = new WeekNotes(notes, weekNumber, allowEdit)

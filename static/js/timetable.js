@@ -2,13 +2,12 @@ import { getEditPageUrlFor } from "./backend-client.js"
 
 export default class TimeTable extends HTMLElement {
 
-  constructor(startOfWeek, shifts, allowEdit, isDefaultWeek) {
+  constructor(startOfWeek, shifts, allowEdit) {
     super()
     this.startOfWeek = startOfWeek
     this.shifts = shifts
     this.allowEdit = allowEdit
     this.weekNumber = startOfWeek.week()
-    this.isDefaultWeek = isDefaultWeek
   }
 
   connectedCallback() {
@@ -24,7 +23,7 @@ export default class TimeTable extends HTMLElement {
 
     const tableHead = `
       <thead><tr>
-        <th>${this.isDefaultWeek ? "*" : this.startOfWeek.format("MM.YYYY").toUpperCase()}</th>
+        <th>${this.startOfWeek.format("MM.YYYY").toUpperCase()}</th>
         <th>Mattino</th>
         <th>Pomeriggio</th>
       </tr></thead>`
@@ -34,7 +33,7 @@ export default class TimeTable extends HTMLElement {
     for (var dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
       tableRows += `
         <tr>
-          <td>${ day.format(this.isDefaultWeek ? "ddd" : "ddd D")}</td>
+          <td>${day.format("ddd D")}</td>
           ${this.renderCell(dayOfWeek, 0)}
           ${this.renderCell(dayOfWeek, 1)}
         </tr>`
@@ -51,10 +50,7 @@ export default class TimeTable extends HTMLElement {
     const joinedNames = names.join(", ")
 
     if (this.allowEdit) {
-      return `<td
-        class="${cssClass}"
-        onclick="redirectToEditPage(${this.isDefaultWeek ? "'default'" : this.weekNumber}, ${dayOfWeek}, ${shiftIndex})"
-      >
+      return `<td class="${cssClass}" onclick="redirectToEditPage(${this.weekNumber}, ${dayOfWeek}, ${shiftIndex})">
         ${joinedNames}
       </td>`
     }
@@ -63,8 +59,6 @@ export default class TimeTable extends HTMLElement {
   }
 
   colorFromWeekNumber() {
-    if(this.isDefaultWeek)
-      return "white"
     const CLASSES = ["blue", "green", "purple", "yellow", "pink"] //, "orange", "red"]
     return CLASSES[this.weekNumber % CLASSES.length]
   }
