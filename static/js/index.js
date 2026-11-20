@@ -8,18 +8,17 @@ window.addEventListener('load', () => {
   const params = new URLSearchParams(document.location.search)
   const weekParam = params.get('weekNumber')
   const dateToBeUsed = weekParam ? moment().week(parseInt(weekParam)) : moment()
-  renderPage(dateToBeUsed)
+  renderPage(dateToBeUsed.startOf('week'))
 })
 
-async function renderPage(weekDay) {
-  await renderTimeTable(weekDay.clone())
-  renderPrevWeekButton(weekDay.clone())
-  renderNextWeekButton(weekDay.clone())
+async function renderPage(startOfWeek) {
+  await renderTimeTable(startOfWeek.clone())
+  renderPrevWeekButton(startOfWeek.clone())
+  renderNextWeekButton(startOfWeek.clone())
 }
 
-async function renderTimeTable(weekDay) {
-  const weekNumber = weekDay.week()
-  const startOfWeek = weekDay.startOf('week')
+async function renderTimeTable(startOfWeek) {
+  const weekNumber = startOfWeek.week()
   const allowEdit = shouldAllowEdit()
 
   const {shifts, notes} = await fetchWeekData(weekNumber)
