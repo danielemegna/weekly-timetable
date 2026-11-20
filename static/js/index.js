@@ -7,7 +7,14 @@ window.addEventListener('load', () => {
   moment.locale('it')
   const params = new URLSearchParams(document.location.search)
   const weekParam = params.get('weekNumber')
-  const dateToBeUsed = weekParam ? moment().week(parseInt(weekParam)) : moment()
+  const yearParam = params.get('year')
+
+  let dateToBeUsed = moment()
+  if(yearParam)
+    dateToBeUsed = dateToBeUsed.year(parseInt(yearParam))
+  if(weekParam)
+    dateToBeUsed = dateToBeUsed.week(parseInt(weekParam))
+
   renderPage(dateToBeUsed.startOf('week'))
 })
 

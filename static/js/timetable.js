@@ -8,6 +8,7 @@ export default class TimeTable extends HTMLElement {
     this.shifts = shifts
     this.allowEdit = allowEdit
     this.weekNumber = startOfWeek.week()
+    this.year = startOfWeek.year()
   }
 
   connectedCallback() {
@@ -50,7 +51,7 @@ export default class TimeTable extends HTMLElement {
     const joinedNames = names.join(", ")
 
     if (this.allowEdit) {
-      return `<td class="${cssClass}" onclick="redirectToEditPage(${this.weekNumber}, ${dayOfWeek}, ${shiftIndex})">
+      return `<td class="${cssClass}" onclick="redirectToEditPage(${this.weekNumber}, ${this.year}, ${dayOfWeek}, ${shiftIndex})">
         ${joinedNames}
       </td>`
     }
@@ -65,8 +66,8 @@ export default class TimeTable extends HTMLElement {
 
 }
 
-window.redirectToEditPage = function(weekNumber, dayOfWeek, shift) {
-  window.location.href = getEditPageUrlFor(weekNumber, dayOfWeek, shift)
+window.redirectToEditPage = function(weekNumber, year, dayOfWeek, shift) {
+  window.location.href = getEditPageUrlFor(weekNumber, year, dayOfWeek, shift)
 }
 
 // name unused since we built it programmatically

@@ -14,8 +14,8 @@ export async function fetchWeekData(weekNumber) {
   return await fetchResponse.json()
 }
 
-export function getEditPageUrlFor(weekNumber, dayOfWeek, shift) {
-  return `${BACKEND_HOST}/edit?week=${weekNumber}&dayOfWeek=${dayOfWeek}&shift=${shift}`
+export function getEditPageUrlFor(weekNumber, year, dayOfWeek, shift) {
+  return `${BACKEND_HOST}/edit?week=${weekNumber}&year=${year}&dayOfWeek=${dayOfWeek}&shift=${shift}`
 }
 
 export function getEditWeekNotesPageUrlFor(weekNumber) {

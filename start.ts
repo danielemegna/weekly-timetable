@@ -38,16 +38,12 @@ app.get('/database/*', async (request, reply) => {
 app.get('/edit', async (request, reply) => {
   const queryParams = request.query as Record<string, string>
   try {
-    const { isDefaultWeek, weekNumber, dayOfWeek, shift } = parseEditTarget(queryParams)
+    const { weekNumber, year, dayOfWeek, shift, isDefaultWeek } = parseEditTarget(queryParams)
     const names = isDefaultWeek
       ? getDefaultNamesFor(dayOfWeek, shift)
       : getNamesFor(weekNumber, dayOfWeek, shift)
 
-    return reply.view('edit.html', {
-      names,
-      weekNumber,
-      isDefaultWeek,
-    })
+    return reply.view('edit.html', { names, weekNumber, year, isDefaultWeek })
   } catch (error) {
     return reply.code(400).send((error as Error).message)
   }
@@ -56,7 +52,7 @@ app.get('/edit', async (request, reply) => {
 app.post('/edit', async (request, reply) => {
   const queryParams = request.query as Record<string, string>
   try {
-    const { isDefaultWeek, weekNumber, dayOfWeek, shift } = parseEditTarget(queryParams)
+    const { weekNumber, year, dayOfWeek, shift, isDefaultWeek } = parseEditTarget(queryParams)
     const { action, name } = request.body as any
 
     switch (action) {
@@ -108,21 +104,25 @@ app.listen({ port: 8125, host: '0.0.0.0' }, (err, address) => {
 })
 
 type EditTarget = {
-  isDefaultWeek: boolean
   weekNumber: number
+  year: number
   dayOfWeek: number
   shift: number
+  isDefaultWeek: boolean
 }
 
 function parseEditTarget(queryParams: Record<string, string>): EditTarget {
-  const week = queryParams.week || '1'
-  const isDefaultWeek = week === 'default'
-  const weekNumber = parseInt(week)
+  const weekNumber = parseInt(queryParams.week || '')
+  const year = parseInt(queryParams.year || '')
   const dayOfWeek = parseInt(queryParams.dayOfWeek || '')
   const shift = parseInt(queryParams.shift || '')
+  const isDefaultWeek = queryParams.week === 'default'
 
   if (!isDefaultWeek && Number.isNaN(weekNumber))
-    throw Error(`Invalid week query parameter: ${week}`)
+    throw Error('The week query parameter is mandatory')
+
+  if (!isDefaultWeek && Number.isNaN(year))
+    throw Error('The year query parameter is mandatory')
 
   if (Number.isNaN(dayOfWeek))
     throw Error('The dayOfWeek query parameter is mandatory')
@@ -130,5 +130,5 @@ function parseEditTarget(queryParams: Record<string, string>): EditTarget {
   if (Number.isNaN(shift))
     throw Error('The shift query parameter is mandatory')
 
-  return { isDefaultWeek, weekNumber, dayOfWeek, shift }
+  return { weekNumber, year, dayOfWeek, shift, isDefaultWeek }
 }

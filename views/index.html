@@ -20,6 +20,7 @@
       function goToFirstWeek() {
         var visitingUrlSearchParams = new URLSearchParams(location.search)
         visitingUrlSearchParams.delete('weekNumber')
+        visitingUrlSearchParams.delete('year')
         location.search = visitingUrlSearchParams.toString()
       }
     </script>
